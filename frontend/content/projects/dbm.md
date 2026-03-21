@@ -2,6 +2,7 @@
 title: "dbm"
 description: "A CLI database monitoring tool in Go — connectivity, read/write health checks, replica master identification, and a JSON metrics endpoint."
 github: "https://github.com/fbufler/dbm"
+blogpost: "/blog/2023/dbm"
 tags: ["go", "postgresql", "sqlite", "cli", "monitoring"]
 primaryLanguage: "go"
 status: "archived"

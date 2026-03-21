@@ -6,6 +6,8 @@ tags: ["go", "postgresql", "sqlite", "cli", "monitoring", "kubernetes"]
 draft: false
 ---
 
+![dbm](/images/dbm.png)
+
 In late 2023, my team and I faced a recurring challenge: managing multiple database instances without a streamlined way to distinguish between primary masters and read-only replicas. At the time, our infrastructure was hosted on-premises via [Cloud Foundry](https://www.cloudfoundry.org/), a setup that lacked native support for automatic master detection or seamless connection failover.
 
 The result was a brittle, manual switchover process during database failures. To bridge this gap, I proactively developed a proof-of-concept tool to automate health checks, which I later refactored and integrated natively into **Kubernetes** for production use.

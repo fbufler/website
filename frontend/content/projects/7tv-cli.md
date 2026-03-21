@@ -2,6 +2,7 @@
 title: "7tv-cli"
 description: "Render 7TV emotes directly in your terminal — because MS Teams wouldn't let me add them there."
 github: "https://github.com/fbufler/7tv-cli"
+blogpost: "/blog/2025/7tv-cli"
 tags: ["go", "cli", "7tv", "emotes"]
 primaryLanguage: "go"
 status: "active"

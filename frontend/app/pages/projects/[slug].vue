@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Github, ExternalLink, ArrowLeft, Circle } from 'lucide-vue-next'
+import { Github, ExternalLink, ArrowLeft, Circle, BookOpen } from 'lucide-vue-next'
 
 const route = useRoute()
 const path = computed(() => `/projects/${route.params.slug}`)
@@ -54,6 +54,13 @@ const statusColor: Record<string, string> = {
           >
             <Github :size="14" /> source
           </a>
+          <NuxtLink
+            v-if="project.blogpost"
+            :to="project.blogpost"
+            class="flex items-center gap-1.5 hover:text-tn-magenta transition-colors"
+          >
+            <BookOpen :size="14" /> blog post
+          </NuxtLink>
           <a
             v-if="project.url"
             :href="project.url"

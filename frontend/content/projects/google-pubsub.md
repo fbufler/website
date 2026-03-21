@@ -2,6 +2,7 @@
 title: "google-pubsub"
 description: "A lightweight Google Cloud Pub/Sub emulator written in pure Go — tiny scratch image, full gRPC API compatibility."
 github: "https://github.com/fbufler/google-pubsub"
+blogpost: "/blog/2026/google-pubsub"
 tags: ["go", "grpc", "docker", "pubsub", "emulator"]
 primaryLanguage: "go"
 status: "active"

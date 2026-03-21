@@ -6,6 +6,8 @@ tags: ["go", "grpc", "docker", "pubsub"]
 draft: false
 ---
 
+![google-pubsub-emulator](/images/google-pubsub.png)
+
 The official Google Cloud Pub/Sub emulator works fine, but it comes with a cost: it's a Java application packaged in a Docker image that weighs around **600 MB**. For local development or CI, that's a lot of overhead for something that just needs to shuffle messages around.
 
 So I built a replacement in Go.

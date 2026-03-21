@@ -6,6 +6,8 @@ tags: ["go", "cli", "7tv", "emotes"]
 draft: false
 ---
 
+![7tv-cli](/images/7tv-cli.png)
+
 I'm a Twitch viewer and a big emotes enjoyer. If you know, you know — there's a whole layer of communication that happens through emotes that plain text just can't replicate. KEKW. catJAM. PauseChamp.
 
 The platform I spend most of my working day on is MS Teams. It has... fine emojis. But it's not the same. So naturally, I looked into building a 7TV integration for Teams.

@@ -22,6 +22,7 @@ export default defineContentConfig({
         description: z.string().optional(),
         github: z.string().optional(),
         url: z.string().optional(),
+        blogpost: z.string().optional(),
         tags: z.array(z.string()).default([]),
         primaryLanguage: z.string().optional(),
         status: z.enum(['active', 'archived', 'wip']).default('active'),
