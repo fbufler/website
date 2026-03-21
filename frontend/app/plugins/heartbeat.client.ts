@@ -1,7 +1,8 @@
 export default defineNuxtPlugin(() => {
   let interval: ReturnType<typeof setInterval> | null = null
 
-  const ping = () => fetch('/api/ping').catch(() => {})
+  const router = useRouter()
+  const ping = () => fetch(`/api/ping?page=${encodeURIComponent(router.currentRoute.value.path)}`).catch(() => {})
 
   const start = () => {
     if (interval) return

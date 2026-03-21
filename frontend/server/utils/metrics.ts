@@ -32,3 +32,10 @@ export const activeVisitors = new Gauge({
 })
 
 export const visitorLastSeen = new Map<string, number>()
+
+export const pageViews = new Counter({
+  name: 'page_views_total',
+  help: 'Client-side page views by route',
+  labelNames: ['page'],
+  registers: [register],
+})

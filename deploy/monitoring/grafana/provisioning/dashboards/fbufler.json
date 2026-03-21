@@ -1,321 +1,190 @@
 {
-  "title": "fbufler.cloud",
-  "uid": "fbufler-overview",
-  "timezone": "browser",
-  "refresh": "1m",
-  "time": { "from": "now-24h", "to": "now" },
+  "title": "fbufler",
+  "uid": "fbufler-main",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-1h", "to": "now" },
   "panels": [
     {
-      "id": 100,
-      "title": "App",
-      "type": "row",
-      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 },
-      "collapsed": false
-    },
-    {
       "id": 1,
-      "title": "Total Page Views",
+      "title": "Active Visitors",
       "type": "stat",
-      "gridPos": { "x": 0, "y": 1, "w": 5, "h": 4 },
-      "datasource": "Prometheus",
-      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "value", "graphMode": "area" },
-      "targets": [
-        {
-          "expr": "sum(increase(http_requests_total{method=\"GET\", route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[$__range]))",
-          "legendFormat": "Page Views"
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "auto" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 5 },
+            { "color": "red", "value": 20 }
+          ]}
         }
-      ]
+      },
+      "targets": [{ "expr": "active_visitors", "legendFormat": "visitors" }]
     },
     {
       "id": 2,
-      "title": "Active Visitors",
+      "title": "Requests / min",
       "type": "stat",
-      "gridPos": { "x": 5, "y": 1, "w": 5, "h": 4 },
-      "datasource": "Prometheus",
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
-      "targets": [
-        {
-          "expr": "http_active_requests",
-          "legendFormat": "Active"
-        }
-      ]
+      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "area" },
+      "fieldConfig": { "defaults": { "unit": "reqpm", "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }] } } },
+      "targets": [{ "expr": "round(sum(rate(http_requests_total[1m])) * 60, 0.01)", "legendFormat": "req/min" }]
     },
     {
       "id": 3,
-      "title": "Requests / min",
+      "title": "404 Errors (1h)",
       "type": "stat",
-      "gridPos": { "x": 10, "y": 1, "w": 5, "h": 4 },
-      "datasource": "Prometheus",
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
-      "targets": [
-        {
-          "expr": "sum(rate(http_requests_total{method=\"GET\", route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[5m])) * 60",
-          "legendFormat": "req/min"
-        }
-      ]
+      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } } },
+      "targets": [{ "expr": "sum(increase(http_requests_total{status=\"404\"}[1h])) or vector(0)", "legendFormat": "404s" }]
     },
     {
       "id": 4,
-      "title": "Avg Response Time",
+      "title": "P95 Response Time",
       "type": "stat",
-      "gridPos": { "x": 15, "y": 1, "w": 5, "h": 4 },
-      "datasource": "Prometheus",
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value" },
-      "fieldConfig": { "defaults": { "unit": "s" } },
-      "targets": [
-        {
-          "expr": "sum(rate(http_request_duration_seconds_sum{route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[5m])) / sum(rate(http_request_duration_seconds_count{route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[5m]))",
-          "legendFormat": "avg"
-        }
-      ]
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "s", "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.5 }, { "color": "red", "value": 1 }] } } },
+      "targets": [{ "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))", "legendFormat": "p95" }]
     },
     {
       "id": 5,
-      "title": "Error Rate",
+      "title": "Heap Used",
       "type": "stat",
-      "gridPos": { "x": 20, "y": 1, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
-      "fieldConfig": { "defaults": { "unit": "percent", "thresholds": { "mode": "absolute", "steps": [{ "value": 0, "color": "green" }, { "value": 1, "color": "red" }] } } },
-      "targets": [
-        {
-          "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) * 100",
-          "legendFormat": "errors %"
-        }
-      ]
+      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "bytes", "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 200000000 }, { "color": "red", "value": 400000000 }] } } },
+      "targets": [{ "expr": "nodejs_heap_size_used_bytes", "legendFormat": "heap used" }]
     },
     {
       "id": 6,
-      "title": "Request Rate over Time",
-      "type": "timeseries",
-      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
-      "targets": [
-        {
-          "expr": "sum by(route) (rate(http_requests_total{method=\"GET\", route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\", status=\"200\"}[$__rate_interval]))",
-          "legendFormat": "{{ route }}"
-        }
-      ]
+      "title": "Event Loop Lag",
+      "type": "stat",
+      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 4 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "colorMode": "background", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "s", "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.1 }, { "color": "red", "value": 0.5 }] } } },
+      "targets": [{ "expr": "nodejs_eventloop_lag_seconds", "legendFormat": "lag" }]
     },
     {
       "id": 7,
-      "title": "Top Pages",
-      "type": "barchart",
-      "gridPos": { "x": 0, "y": 13, "w": 14, "h": 10 },
-      "datasource": "Prometheus",
-      "options": { "orientation": "horizontal" },
+      "title": "Requests over Time",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "reqps", "color": { "mode": "palette-classic" } } },
       "targets": [
-        {
-          "expr": "topk(10, sum by(route) (increase(http_requests_total{method=\"GET\", route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\", status=\"200\"}[$__range])))",
-          "legendFormat": "{{ route }}",
-          "instant": true
-        }
+        { "expr": "sum(rate(page_views_total[5m])) by (page)", "legendFormat": "{{page}}" }
       ]
     },
     {
       "id": 8,
-      "title": "Status Codes",
-      "type": "piechart",
-      "gridPos": { "x": 14, "y": 13, "w": 5, "h": 10 },
-      "datasource": "Prometheus",
-      "options": { "pieType": "donut", "legend": { "displayMode": "table", "placement": "right", "values": ["value", "percent"] } },
-      "targets": [
-        {
-          "expr": "sum by(status) (increase(http_requests_total[$__range]))",
-          "legendFormat": "{{ status }}",
-          "instant": true
-        }
-      ]
+      "title": "Top Pages (24h)",
+      "type": "table",
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "sortBy": [{ "displayName": "Value", "desc": true }] },
+      "targets": [{ "expr": "sort_desc(sum by (page) (increase(page_views_total[24h])))", "legendFormat": "{{page}}", "instant": true, "format": "table" }]
     },
     {
       "id": 9,
-      "title": "Top 404s",
-      "type": "table",
-      "gridPos": { "x": 19, "y": 13, "w": 5, "h": 10 },
-      "datasource": "Prometheus",
-      "options": { "sortBy": [{ "displayName": "Value", "desc": true }] },
+      "title": "Response Status Breakdown",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 12, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "reqps", "color": { "mode": "palette-classic" } } },
       "targets": [
-        {
-          "expr": "topk(10, sum by(route) (increase(http_requests_total{status=\"404\"}[$__range])))",
-          "legendFormat": "{{ route }}",
-          "instant": true,
-          "format": "table"
-        }
+        { "expr": "sum(rate(http_requests_total[1m])) by (status)", "legendFormat": "{{status}}" }
       ]
     },
     {
       "id": 10,
-      "title": "Response Time Percentiles",
-      "type": "timeseries",
-      "gridPos": { "x": 0, "y": 23, "w": 24, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 5 } } },
-      "targets": [
-        {
-          "expr": "histogram_quantile(0.50, sum by(le) (rate(http_request_duration_seconds_bucket{route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[$__rate_interval])))",
-          "legendFormat": "p50"
-        },
-        {
-          "expr": "histogram_quantile(0.90, sum by(le) (rate(http_request_duration_seconds_bucket{route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[$__rate_interval])))",
-          "legendFormat": "p90"
-        },
-        {
-          "expr": "histogram_quantile(0.99, sum by(le) (rate(http_request_duration_seconds_bucket{route!~\"/_nuxt.*|/__nuxt.*|/api/_content.*|/metrics|/_ipx.*\"}[$__rate_interval])))",
-          "legendFormat": "p99"
-        }
-      ]
-    },
-    {
-      "id": 200,
-      "title": "Node.js Runtime",
-      "type": "row",
-      "gridPos": { "x": 0, "y": 31, "w": 24, "h": 1 },
-      "collapsed": false
+      "title": "404 Routes (24h)",
+      "type": "table",
+      "gridPos": { "x": 12, "y": 12, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "sortBy": [{ "displayName": "Value", "desc": true }] },
+      "targets": [{ "expr": "sort_desc(sum by (route) (increase(http_requests_total{status=\"404\"}[24h])))", "legendFormat": "{{route}}", "instant": true, "format": "table" }]
     },
     {
       "id": 11,
-      "title": "Heap Used",
+      "title": "Node.js Heap",
       "type": "timeseries",
-      "gridPos": { "x": 0, "y": 32, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+      "gridPos": { "x": 0, "y": 20, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "bytes", "color": { "mode": "palette-classic" } } },
       "targets": [
-        {
-          "expr": "nodejs_heap_size_used_bytes",
-          "legendFormat": "heap used"
-        },
-        {
-          "expr": "nodejs_heap_size_total_bytes",
-          "legendFormat": "heap total"
-        }
+        { "expr": "nodejs_heap_size_used_bytes", "legendFormat": "used" },
+        { "expr": "nodejs_heap_size_total_bytes", "legendFormat": "total" }
       ]
     },
     {
       "id": 12,
-      "title": "Event Loop Lag",
+      "title": "Event Loop Lag over Time",
       "type": "timeseries",
-      "gridPos": { "x": 12, "y": 32, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 5 }, "thresholds": { "mode": "absolute", "steps": [{ "value": 0, "color": "green" }, { "value": 0.1, "color": "yellow" }, { "value": 0.5, "color": "red" }] } } },
-      "targets": [
-        {
-          "expr": "nodejs_eventloop_lag_seconds",
-          "legendFormat": "lag"
-        },
-        {
-          "expr": "nodejs_eventloop_lag_p99_seconds",
-          "legendFormat": "p99"
-        }
-      ]
+      "gridPos": { "x": 12, "y": 20, "w": 12, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "color": { "mode": "palette-classic" } } },
+      "targets": [{ "expr": "nodejs_eventloop_lag_seconds", "legendFormat": "lag" }]
     },
     {
       "id": 13,
-      "title": "CPU Usage",
+      "title": "VPS CPU Usage",
       "type": "timeseries",
-      "gridPos": { "x": 0, "y": 40, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "percentunit", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
-      "targets": [
-        {
-          "expr": "rate(process_cpu_seconds_total[$__rate_interval])",
-          "legendFormat": "cpu"
-        }
-      ]
+      "gridPos": { "x": 0, "y": 28, "w": 8, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "percentunit", "min": 0, "max": 1, "color": { "mode": "palette-classic" } } },
+      "targets": [{ "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))", "legendFormat": "cpu" }]
     },
     {
       "id": 14,
-      "title": "Active Handles & Requests",
+      "title": "VPS Memory",
       "type": "timeseries",
-      "gridPos": { "x": 12, "y": 40, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 5 } } },
+      "gridPos": { "x": 8, "y": 28, "w": 8, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "bytes", "color": { "mode": "palette-classic" } } },
       "targets": [
-        {
-          "expr": "nodejs_active_handles_total",
-          "legendFormat": "handles"
-        },
-        {
-          "expr": "nodejs_active_requests_total",
-          "legendFormat": "requests"
-        }
+        { "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes", "legendFormat": "used" },
+        { "expr": "node_memory_MemTotal_bytes", "legendFormat": "total" }
       ]
-    },
-    {
-      "id": 300,
-      "title": "VPS",
-      "type": "row",
-      "gridPos": { "x": 0, "y": 48, "w": 24, "h": 1 },
-      "collapsed": false
     },
     {
       "id": 15,
-      "title": "CPU Usage",
-      "type": "timeseries",
-      "gridPos": { "x": 0, "y": 49, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "percentunit", "min": 0, "max": 1, "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
-      "targets": [
-        {
-          "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[$__rate_interval]))",
-          "legendFormat": "cpu used"
+      "title": "VPS Disk Usage",
+      "type": "gauge",
+      "gridPos": { "x": 16, "y": 28, "w": 8, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "options": { "minVizWidth": 75, "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0, "max": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.7 }, { "color": "red", "value": 0.9 }] }
         }
-      ]
+      },
+      "targets": [{ "expr": "1 - (node_filesystem_avail_bytes{mountpoint=\"/\",fstype!=\"tmpfs\"} / node_filesystem_size_bytes{mountpoint=\"/\",fstype!=\"tmpfs\"})", "legendFormat": "disk /" }]
     },
     {
       "id": 16,
-      "title": "Memory Usage",
+      "title": "VPS Network",
       "type": "timeseries",
-      "gridPos": { "x": 12, "y": 49, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+      "gridPos": { "x": 0, "y": 36, "w": 24, "h": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "Bps", "color": { "mode": "palette-classic" } } },
       "targets": [
-        {
-          "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
-          "legendFormat": "used"
-        },
-        {
-          "expr": "node_memory_MemTotal_bytes",
-          "legendFormat": "total"
-        }
-      ]
-    },
-    {
-      "id": 17,
-      "title": "Disk Usage",
-      "type": "timeseries",
-      "gridPos": { "x": 0, "y": 57, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
-      "targets": [
-        {
-          "expr": "node_filesystem_size_bytes{mountpoint=\"/\", fstype!=\"tmpfs\"} - node_filesystem_free_bytes{mountpoint=\"/\", fstype!=\"tmpfs\"}",
-          "legendFormat": "used"
-        },
-        {
-          "expr": "node_filesystem_size_bytes{mountpoint=\"/\", fstype!=\"tmpfs\"}",
-          "legendFormat": "total"
-        }
-      ]
-    },
-    {
-      "id": 18,
-      "title": "Network I/O",
-      "type": "timeseries",
-      "gridPos": { "x": 12, "y": 57, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "lineWidth": 2, "fillOpacity": 5 } } },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_bytes_total{device!=\"lo\"}[$__rate_interval])",
-          "legendFormat": "in {{ device }}"
-        },
-        {
-          "expr": "rate(node_network_transmit_bytes_total{device!=\"lo\"}[$__rate_interval])",
-          "legendFormat": "out {{ device }}"
-        }
+        { "expr": "rate(node_network_receive_bytes_total{device!=\"lo\"}[1m])", "legendFormat": "rx {{device}}" },
+        { "expr": "rate(node_network_transmit_bytes_total{device!=\"lo\"}[1m])", "legendFormat": "tx {{device}}" }
       ]
     }
-  ],
-  "schemaVersion": 38
+  ]
 }
