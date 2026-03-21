@@ -56,6 +56,12 @@ export default defineNuxtConfig({
       ],
       link: [
         {
+          rel: 'alternate',
+          type: 'application/rss+xml',
+          title: 'fbufler blog',
+          href: '/rss.xml',
+        },
+        {
           rel: 'preconnect',
           href: 'https://fonts.googleapis.com',
         },

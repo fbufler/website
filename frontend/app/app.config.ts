@@ -3,6 +3,7 @@ export default defineAppConfig({
     name: 'fbufler',
     tagline: 'developer · writer · builder',
     github: 'https://github.com/fbufler',
+    linkedin: 'https://www.linkedin.com/in/florian-bufler-a40b63174',
     nav: [
       { label: '~/', path: '/' },
       { label: '~/blog', path: '/blog' },
