@@ -1,0 +1,80 @@
+/* ── Tokyo Night — Dark (default) ──────────────────────────────── */
+:root {
+  /* Background layers */
+  --tn-bg:          #1a1b26;
+  --tn-bg-dark:     #16161e;
+  --tn-bg-highlight:#292e42;
+  --tn-bg-visual:   #33467c;
+  --tn-bg-popup:    #1f2335;
+
+  /* Foreground */
+  --tn-fg:          #c0caf5;
+  --tn-fg-dark:     #a9b1d6;
+  --tn-fg-muted:    #565f89;
+  --tn-fg-gutter:   #3b3d57;
+
+  /* Accent colors */
+  --tn-blue:        #7aa2f7;
+  --tn-cyan:        #7dcfff;
+  --tn-green:       #9ece6a;
+  --tn-yellow:      #e0af68;
+  --tn-orange:      #ff9e64;
+  --tn-red:         #f7768e;
+  --tn-magenta:     #bb9af7;
+  --tn-teal:        #2ac3de;
+
+  /* Borders */
+  --tn-border:        #292e42;
+  --tn-border-accent: #3b3d57;
+
+  /* Semantic aliases */
+  --color-bg:          var(--tn-bg);
+  --color-bg-surface:  var(--tn-bg-popup);
+  --color-bg-muted:    var(--tn-bg-dark);
+  --color-text:        var(--tn-fg);
+  --color-text-muted:  var(--tn-fg-dark);
+  --color-accent:      var(--tn-blue);
+  --color-accent-alt:  var(--tn-cyan);
+  --color-success:     var(--tn-green);
+  --color-warning:     var(--tn-yellow);
+  --color-danger:      var(--tn-red);
+  --color-border:      var(--tn-border);
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+
+  /* Radii */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ── Tokyo Night — Light ───────────────────────────────────────── */
+.light {
+  --tn-bg:          #d5d6db;
+  --tn-bg-dark:     #cbccd1;
+  --tn-bg-highlight:#c4c8da;
+  --tn-bg-visual:   #b4c4e0;
+  --tn-bg-popup:    #e9e9ec;
+
+  --tn-fg:          #343b58;
+  --tn-fg-dark:     #565a6e;
+  --tn-fg-muted:    #8990b3;
+  --tn-fg-gutter:   #b0b3c5;
+
+  --tn-blue:        #2959aa;
+  --tn-cyan:        #0f4b6e;
+  --tn-green:       #485e30;
+  --tn-yellow:      #8f5e15;
+  --tn-orange:      #965027;
+  --tn-red:         #8c4351;
+  --tn-magenta:     #5a4a78;
+  --tn-teal:        #0f6d9b;
+
+  --tn-border:        #c4c8da;
+  --tn-border-accent: #a8abbe;
+}

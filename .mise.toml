@@ -1,0 +1,7 @@
+[tools]
+node = "22"
+pnpm = "10.32.1"
+task = "latest"
+
+[env]
+NODE_ENV = "development"

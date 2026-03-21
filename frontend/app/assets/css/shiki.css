@@ -1,0 +1,52 @@
+/* ── Shiki code block chrome ──────────────────────────────────── */
+.shiki {
+  background: var(--tn-bg-dark) !important;
+  border: 1px solid var(--tn-border);
+  border-radius: var(--radius-md);
+  padding: 1.25em 1.5em;
+  overflow-x: auto;
+  font-size: 0.875em;
+  line-height: 1.75;
+  tab-size: 2;
+}
+
+/* Inline code outside prose */
+:not(pre) > code {
+  background: var(--tn-bg-popup);
+  color: var(--tn-green);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+  border: 1px solid var(--tn-border);
+}
+
+/* Shiki light/dark theme switching */
+.shiki,
+.shiki span {
+  color: var(--shiki-default) !important;
+  background-color: var(--shiki-default-bg) !important;
+  font-style: var(--shiki-default-font-style) !important;
+  font-weight: var(--shiki-default-font-weight) !important;
+  text-decoration: var(--shiki-default-text-decoration) !important;
+}
+
+html.light .shiki,
+html.light .shiki span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
+/* Line numbers (optional, enabled per-block) */
+.shiki .line {
+  display: block;
+}
+
+.shiki .line.highlighted {
+  background: var(--tn-bg-highlight);
+  margin: 0 -1.5em;
+  padding: 0 1.5em;
+  border-left: 2px solid var(--tn-blue);
+}

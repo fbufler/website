@@ -1,0 +1,114 @@
+info:
+  name: Florian Bufler
+  title: Cloud native enthusiast
+  email: hello@fbufler.dev
+  github: fbufler
+  linkedin: https://linkedin.com/in/florian-bufler-a40b63174/
+  location: Germany
+  website: https://fbufler.cloud
+
+experience:
+  - company: Schwarz IT KG
+    role: Senior Software Engineer
+    period:
+      from: "2025-10"
+      to: present
+    location: Neckarsulm, Germany
+
+  - company: Bosch Digital Twin Industries
+    role: Senior Software Engineer
+    period:
+      from: "2025-01"
+      to: "2025-10"
+    location: Ludwigsburg, Germany
+    bullets:
+      - Developing, maintaining, and optimizing the software ecosystem that integrates common elements across various software and service components
+      - Streamlining and productizing software architecture, deployments, and strategies — turning clutter into clarity as we move beyond the MVP phase
+      - Collaborating on customer-related projects to ensure solutions not only meet but exceed expectations
+
+  - company: Bosch Business Innovations
+    role: Intrapreneur
+    period:
+      from: "2023-01"
+      to: "2025-10"
+    location: Ludwigsburg, Germany
+
+  - company: Bosch Software Flow
+    role: Senior Software Engineer
+    period:
+      from: "2023-01"
+      to: "2024-12"
+    location: Ludwigsburg, Germany
+    bullets:
+      - Led architecture and development of backend for cloud-native services using cutting-edge technology stack
+      - Managed entire service lifecycle from UX-driven requirement gathering to operations and customer support
+      - Implemented DevOps practices to ensure seamless integration and delivery in a startup environment
+      - Collaborated with cross-functional teams to enhance user experience and drive service innovation
+      - Optimised backend systems for scalability and performance, improving client satisfaction and service reliability
+
+  - company: Bosch
+    role: DevOps Engineer
+    period:
+      from: "2021-10"
+      to: "2023-01"
+    location: Stuttgart, Germany
+    bullets:
+      - Developed PoCs and MVPs in a SAFe setup, enhancing developer efficiency
+      - Led infrastructure automation projects to streamline processes and improve operational efficiency
+      - Implemented new features to optimise system performance and user satisfaction
+      - Collaborated closely with users to ensure decisions were driven by value and user needs
+      - Utilised DevOps practices to automate workflows and support agile development
+
+  - company: Robert Bosch GmbH
+    role: Cooperative Studies
+    period:
+      from: "2018-10"
+      to: "2021-09"
+    location: Region Stuttgart
+    bullets:
+      - Went through multiple areas in the company and worked on smaller projects
+      - SaaS offering related to cloud based car pool management
+      - Hardware project related to Battery in the Cloud
+      - Test automation related to VCU integration testing
+
+skills:
+  - category: Languages
+    items: [Go, TypeScript, Python, SQL, Bash]
+
+  - category: Frameworks & Tools
+    items: [gRPC, buf, Gin, Vue, Nuxt, Docker, Kubernetes, PostgreSQL, SQLite]
+
+  - category: Infrastructure & Cloud
+    items:
+      [
+        GCP,
+        Azure,
+        AWS,
+        RabbitMQ,
+        PubSub,
+        Kafka,
+        EventHub,
+        ServiceBus,
+        S3,
+        Azure Blob Storage,
+        Gitlab Workflows,
+        Azure DevOps,
+        GitHub Actions,
+        Terraform,
+      ]
+
+  - category: Practices
+    items: [Cloud-Native, DevOps, SAFe, Event-driven, TDD, Agile]
+
+education:
+  - institution: Duale Hochschule Baden-Württemberg (DHBW)
+    degree: Bachelor of Science — Informatik, IT-Automotive
+    period:
+      from: "2018-01"
+      to: "2021-12"
+
+  - institution: Werner-Siemens-Schule Stuttgart
+    degree: Abitur — Elektro- und Informationstechnik
+    period:
+      from: "2015-01"
+      to: "2018-12"

@@ -1,0 +1,22 @@
+services:
+  frontend:
+    image: ghcr.io/fbufler/fbufler:latest
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_SITE_URL=https://me.fbufler.cloud
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fbufler.rule=Host(`me.fbufler.cloud`)
+      - traefik.http.routers.fbufler.entrypoints=websecure
+      - traefik.http.routers.fbufler.tls.certresolver=letsencrypt
+      - traefik.http.services.fbufler.loadbalancer.server.port=3000
+    networks:
+      - web
+      - monitoring
+
+networks:
+  web:
+    external: true
+  monitoring:
+    external: true

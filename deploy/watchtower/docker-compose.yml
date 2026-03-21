@@ -1,0 +1,10 @@
+services:
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 300
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - DOCKER_API_VERSION=1.41

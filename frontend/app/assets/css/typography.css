@@ -1,0 +1,108 @@
+/* ── Prose overrides for @tailwindcss/typography ──────────────── */
+.prose {
+  max-width: 70ch;
+  color: var(--tn-fg);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--tn-blue);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.prose h2 {
+  border-bottom: 1px solid var(--tn-border);
+  padding-bottom: 0.3em;
+}
+
+.prose a {
+  color: var(--tn-cyan);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--tn-blue);
+}
+
+.prose strong {
+  color: var(--tn-orange);
+  font-weight: 600;
+}
+
+.prose em {
+  color: var(--tn-magenta);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--tn-blue);
+  background: var(--tn-bg-popup);
+  padding: 0.75em 1em;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--tn-fg-dark);
+  font-style: normal;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+.prose code:not(pre code) {
+  background: var(--tn-bg-popup);
+  color: var(--tn-green);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+  border: 1px solid var(--tn-border);
+}
+
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+  content: none;
+}
+
+.prose pre {
+  background: var(--tn-bg-dark) !important;
+  border: 1px solid var(--tn-border);
+  border-radius: var(--radius-md);
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.prose hr {
+  border-color: var(--tn-border);
+  margin: 2em 0;
+}
+
+.prose ul li::marker {
+  color: var(--tn-blue);
+}
+
+.prose ol li::marker {
+  color: var(--tn-fg-muted);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.prose thead th {
+  background: var(--tn-bg-popup);
+  color: var(--tn-blue);
+  border-bottom: 2px solid var(--tn-border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+
+.prose tbody td {
+  border-bottom: 1px solid var(--tn-border);
+  padding: 0.5em 0.75em;
+}
+
+.prose tbody tr:nth-child(even) {
+  background: var(--tn-bg-dark);
+}
