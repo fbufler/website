@@ -8,6 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme.json:/acme.json
+      - ./acme-zerossl.json:/acme-zerossl.json
     command:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
@@ -18,6 +19,12 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=florian.bufler@fbufler.cloud
       - --certificatesresolvers.letsencrypt.acme.storage=/acme.json
+      - --certificatesresolvers.zerossl.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.zerossl.acme.email=florian.bufler@fbufler.cloud
+      - --certificatesresolvers.zerossl.acme.storage=/acme-zerossl.json
+      - --certificatesresolvers.zerossl.acme.caserver=https://acme.zerossl.com/v2/DV90
+      - --certificatesresolvers.zerossl.acme.eab.kid=${ZEROSSL_KID}
+      - --certificatesresolvers.zerossl.acme.eab.hmacencoded=${ZEROSSL_HMAC_KEY}
     networks:
       - web
 

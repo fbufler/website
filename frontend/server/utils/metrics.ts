@@ -24,3 +24,11 @@ export const httpActiveRequests = new Gauge({
   help: 'Currently active HTTP requests',
   registers: [register],
 })
+
+export const activeVisitors = new Gauge({
+  name: 'active_visitors',
+  help: 'Visitors active in the last 60 seconds',
+  registers: [register],
+})
+
+export const visitorLastSeen = new Map<string, number>()

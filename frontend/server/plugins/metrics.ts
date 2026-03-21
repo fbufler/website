@@ -10,7 +10,7 @@ export default defineNitroPlugin((nitroApp) => {
     httpActiveRequests.dec()
 
     const route = event.path.split('?')[0]
-    if (route === '/metrics') return
+    if (route === '/metrics' || route === '/api/ping') return
 
     const duration = (performance.now() - (event.context._startTime ?? performance.now())) / 1000
     const status = String(event.node.res.statusCode)

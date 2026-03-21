@@ -11,8 +11,9 @@ services:
       - traefik.enable=true
       - traefik.http.routers.fbufler.rule=Host(`me.fbufler.cloud`)
       - traefik.http.routers.fbufler.entrypoints=websecure
-      - traefik.http.routers.fbufler.tls.certresolver=letsencrypt
+      - traefik.http.routers.fbufler.tls.certresolver=zerossl
       - traefik.http.services.fbufler.loadbalancer.server.port=3000
+      - traefik.docker.network=web
     networks:
       - web
       - monitoring
