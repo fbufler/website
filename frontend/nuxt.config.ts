@@ -83,5 +83,15 @@ export default defineNuxtConfig({
     typeCheck: false,
   },
 
+  nitro: {
+    externals: {
+      inline: [
+        '@opentelemetry/sdk-node',
+        '@opentelemetry/auto-instrumentations-node',
+        '@opentelemetry/exporter-trace-otlp-grpc',
+      ],
+    },
+  },
+
   devtools: { enabled: true },
 })

@@ -5,6 +5,8 @@ services:
     environment:
       - NODE_ENV=production
       - NUXT_PUBLIC_SITE_URL=https://me.fbufler.cloud
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_SERVICE_NAME=fbufler
     labels:
       - traefik.enable=true
       - traefik.http.routers.fbufler.rule=Host(`me.fbufler.cloud`)

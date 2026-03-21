@@ -8,14 +8,48 @@ services:
     networks:
       - monitoring
 
+  loki:
+    image: grafana/loki:latest
+    restart: always
+    user: root
+    volumes:
+      - ./loki/config.yml:/etc/loki/config.yml
+      - loki_data:/loki
+    command: -config.file=/etc/loki/config.yml
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:latest
+    restart: always
+    volumes:
+      - ./promtail/config.yml:/etc/promtail/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - monitoring
+
+  tempo:
+    image: grafana/tempo:2.6.1
+    restart: always
+    user: root
+    volumes:
+      - ./tempo/config.yml:/etc/tempo.yml
+      - tempo_data:/var/tempo
+    command: -config.file=/etc/tempo.yml
+    networks:
+      - monitoring
+
   grafana:
     image: grafana/grafana:latest
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=fbufler
       - GF_SECURITY_ADMIN_PASSWORD=changeme
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor
     labels:
       - traefik.enable=true
       - traefik.http.routers.grafana.rule=Host(`grafana.fbufler.cloud`)
@@ -29,10 +63,12 @@ services:
 
 volumes:
   prometheus_data:
+  loki_data:
+  tempo_data:
   grafana_data:
 
 networks:
   web:
     external: true
   monitoring:
-    internal: true
+    external: true
