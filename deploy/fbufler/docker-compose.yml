@@ -7,6 +7,7 @@ services:
       - NUXT_PUBLIC_SITE_URL=https://me.fbufler.cloud
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318
       - OTEL_SERVICE_NAME=fbufler
+      - OTEL_METRICS_EXPORTER=none
     labels:
       - traefik.enable=true
       - traefik.http.routers.fbufler.rule=Host(`me.fbufler.cloud`)
