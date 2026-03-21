@@ -1,11 +1,14 @@
-import { httpRequestsTotal, httpRequestDuration } from '../utils/metrics'
+import { httpRequestsTotal, httpRequestDuration, httpActiveRequests } from '../utils/metrics'
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('request', (event) => {
     event.context._startTime = performance.now()
+    httpActiveRequests.inc()
   })
 
   nitroApp.hooks.hook('afterResponse', (event) => {
+    httpActiveRequests.dec()
+
     const route = event.path.split('?')[0]
     if (route === '/metrics') return
 

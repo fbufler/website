@@ -8,6 +8,9 @@ node_modules/
 dist/
 .nitro/
 .cache/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Env
 .env
