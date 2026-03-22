@@ -1,0 +1,46 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      - N8N_HOST=n8n.fbufler.cloud
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.fbufler.cloud
+      - GENERIC_TIMEZONE=Europe/Berlin
+      - N8N_SECURE_COOKIE=false
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      # webhook route — public, Telegram needs this
+      - traefik.http.routers.n8n-webhook.rule=Host(`n8n.fbufler.cloud`) && PathPrefix(`/webhook`)
+      - traefik.http.routers.n8n-webhook.entrypoints=websecure
+      - traefik.http.routers.n8n-webhook.tls.certresolver=zerossl
+      - traefik.http.routers.n8n-webhook.service=n8n-svc
+      - traefik.http.routers.n8n-webhook.priority=10
+      # block everything else
+      - traefik.http.routers.n8n-block.rule=Host(`n8n.fbufler.cloud`)
+      - traefik.http.routers.n8n-block.entrypoints=websecure
+      - traefik.http.routers.n8n-block.tls.certresolver=zerossl
+      - traefik.http.routers.n8n-block.priority=1
+      - traefik.http.routers.n8n-block.middlewares=n8n-deny
+      - traefik.http.routers.n8n-block.service=n8n-svc
+      - traefik.http.middlewares.n8n-deny.ipallowlist.sourcerange=127.0.0.1/32
+      - traefik.http.services.n8n-svc.loadbalancer.server.port=5678
+
+volumes:
+  n8n_data:
+
+networks:
+  web:
+    external: true
